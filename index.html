@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#244b32">
+  <title>AMIGRAIN | Goodness of Grains</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#home"><span class="brand-mark">A</span><span><b>AMIGRAIN</b><small>THE GOODNESS OF GRAINS</small></span></a>
+  <div class="header-actions">
+    <button class="icon-btn" id="ordersBtn" aria-label="My orders">▤ <span>Orders</span></button>
+    <button class="icon-btn" id="cartBtn" aria-label="Shopping cart">🛒 <span>Cart</span><i id="cartCount">0</i></button>
+    <button class="hamburger" id="menuBtn" aria-label="Open menu">☰</button>
+  </div>
+</header>
+<nav id="menuPanel" class="menu-panel hidden">
+  <a href="#home">Home</a><a href="#products">Shop products</a>
+  <button id="menuOrders">My orders</button><button id="loginMenu">Login / Register</button>
+  <a href="#help">Help & contact</a>
+</nav>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-copy">
+    <span class="eyebrow">TRADITION • QUALITY • TRUST</span>
+    <h1>Goodness of grains.<br><em>Love in every meal.</em></h1>
+    <p>Bring home the taste of carefully selected grains, wholesome flours and traditional sweets from AMIGRAIN.</p>
+    <a class="primary-btn" href="#products">Explore products <span>→</span></a>
+    <div class="hero-points"><span>✓ Quality ingredients</span><span>✓ Everyday goodness</span></div>
+  </div>
+  <div class="hero-art" aria-label="Illustration of grain products">
+    <div class="sun"></div><div class="grain grain-one">🌾</div><div class="grain grain-two">🌾</div>
+    <div class="sack sack-back"><span>PURE<br>GRAINS</span></div>
+    <div class="sack sack-front"><span>AMIGRAIN<small>WHOLE WHEAT ATTA</small></span></div>
+    <div class="grain-caption">FROM OUR GRAINS<br>TO YOUR TABLE</div>
+  </div>
+</section>
+
+<section class="trust-strip"><div>🌾 <b>Traditional grains</b></div><div>🥣 <b>Everyday essentials</b></div><div>🏡 <b>Made for your home</b></div></section>
+
+<section class="section" id="products">
+  <div class="section-heading"><div><span class="eyebrow">OUR COLLECTION</span><h2>Shop our products</h2><p>Choose the goodness that belongs in your kitchen.</p></div></div>
+  <div class="filters" id="filters">
+    <button class="filter active" data-filter="All">All</button><button class="filter" data-filter="Atta">Atta</button><button class="filter" data-filter="Flour">Flours</button><button class="filter" data-filter="Sweets">Sweets</button>
+  </div>
+  <div class="product-grid" id="productGrid"></div>
+</section>
+
+<section class="story">
+  <div class="story-symbol">🌾</div><div><span class="eyebrow">THE AMIGRAIN PROMISE</span><h2>Simple ingredients.<br>Honest goodness.</h2><p>From everyday rotis to special family moments, find pantry essentials that bring traditional taste to your table.</p></div>
+</section>
+
+<section class="help-section" id="help">
+  <div><span class="eyebrow">WE'RE HERE TO HELP</span><h2>Need a little help?</h2><p>Talk to AMIGRAIN for product and order-related assistance.</p></div>
+  <div class="help-actions"><a class="primary-btn" href="tel:7983103853">Call 7983103853</a><a class="whatsapp-btn" target="_blank" rel="noopener" href="https://wa.me/917983103853?text=Hello%20AMIGRAIN">Chat on WhatsApp</a></div>
+</section>
+</main>
+
+<footer><a class="brand footer-brand" href="#home"><span class="brand-mark">A</span><span><b>AMIGRAIN</b><small>THE GOODNESS OF GRAINS</small></span></a><p>© <span id="year"></span> AMIGRAIN. All rights reserved.</p><small>Product and nutrition details should be verified against actual packaging before launch.</small></footer>
+
+<div class="overlay hidden" id="overlay"></div>
+<aside class="drawer hidden" id="cartDrawer">
+  <div class="drawer-head"><h2>Your cart</h2><button class="close" data-close>×</button></div>
+  <div id="cartItems" class="drawer-content"></div>
+  <div class="cart-bottom"><div class="total-line"><span>Subtotal</span><b id="cartTotal">₹0</b></div><button class="primary-btn full" id="checkoutBtn">Proceed to checkout</button></div>
+</aside>
+
+<section class="modal hidden" id="authModal">
+  <button class="close modal-close" data-close>×</button><span class="eyebrow">WELCOME TO AMIGRAIN</span><h2 id="authTitle">Login / Register</h2>
+  <p class="muted">This starter version saves a demo account on this device only.</p>
+  <label>Your name<input id="authName" placeholder="Enter your name"></label>
+  <label>Email or phone number<input id="authIdentity" placeholder="Email address or mobile number"></label>
+  <button class="primary-btn full" id="authSubmit">Continue</button>
+  <p class="tiny">Demo only: this does not send an OTP or verify Gmail. Real authentication is added in Stage 2.</p>
+</section>
+
+<section class="modal wide-modal hidden" id="checkoutModal">
+  <button class="close modal-close" data-close>×</button><span class="eyebrow">ALMOST THERE</span><h2>Delivery details</h2>
+  <div class="checkout-grid">
+    <div>
+      <label>Full name<input id="customerName" placeholder="Your name" autocomplete="name"></label>
+      <label>Phone number<input id="customerPhone" placeholder="10-digit mobile number" inputmode="numeric" maxlength="10"></label>
+      <label>Complete delivery address<textarea id="customerAddress" rows="4" placeholder="House / street, area, city, state, PIN code" autocomplete="street-address"></textarea></label>
+      <a class="map-link" id="mapLink" href="https://maps.google.com" target="_blank" rel="noopener">📍 View address on Google Maps</a>
+      <p class="tiny">Enter your address first, then open Google Maps to check the location. This is a Maps search link, not automatic address verification.</p>
+    </div>
+    <div class="order-summary"><h3>Order summary</h3><div id="checkoutSummary"></div><div class="total-line"><span>Total</span><b id="checkoutTotal">₹0</b></div>
+      <h3>Payment method</h3>
+      <label class="payment-option"><input type="radio" name="payment" value="COD" checked> Cash on Delivery</label>
+      <label class="payment-option"><input type="radio" name="payment" value="UPI"> UPI (Google Pay / PhonePe)</label>
+      <button class="primary-btn full" id="placeOrderBtn">Place order</button>
+      <p class="tiny">UPI opens a payment app. This demo cannot confirm payment automatically; configure a payment gateway and server verification before accepting real orders.</p>
+    </div>
+  </div>
+</section>
+
+<section class="modal hidden" id="ordersModal"><button class="close modal-close" data-close>×</button><span class="eyebrow">YOUR ACCOUNT</span><h2>My orders</h2><div id="ordersList"></div></section>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body></html>
