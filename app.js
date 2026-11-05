@@ -67,3 +67,35 @@ $("cartItems").addEventListener("click",e=>{const b=e.target.closest("[data-qty]
 $("customerAddress").addEventListener("input",()=>{const q=encodeURIComponent($("customerAddress").value.trim());$("mapLink").href=q?`https://www.google.com/maps/search/?api=1&query=${q}`:"https://maps.google.com"});
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=closeLayers);$("overlay").onclick=closeLayers;
 $("year").textContent=new Date().getFullYear();renderProducts();updateCount();
+// AMIGRAIN - Google Authentication
+const googleSignInBtn = $("googleSignInBtn");
+
+googleSignInBtn.addEventListener("click", async () => {
+  try {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await auth.signInWithRedirect(provider);
+  } catch (error) {
+    toast("Google login failed: " + error.message);
+  }
+});
+
+// Check login after Google redirects back
+auth.getRedirectResult().catch(error => {
+  toast("Login error: " + error.message);
+});
+
+// Keep customer login saved
+auth.onAuthStateChanged(user => {
+  if (user) {
+    localStorage.setItem(USER_KEY, JSON.stringify({
+      name: user.displayName || "Customer",
+      identity: user.email || user.uid,
+      uid: user.uid,
+      email: user.email,
+      photoURL: user.photoURL
+    }));
+
+    closeLayers();
+    toast("Welcome to AMIGRAIN!");
+  }
+});
