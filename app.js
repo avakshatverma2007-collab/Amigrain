@@ -104,3 +104,99 @@ auth.onAuthStateChanged(user => {
     toast("Welcome to AMIGRAIN!");
   }
 });
+
+// AMIGRAIN - Firebase Phone OTP Authentication
+
+let confirmationResult = null;
+let recaptchaVerifier = null;
+
+$("sendOtpBtn").addEventListener("click", async () => {
+  const name = $("authName").value.trim();
+  const phone = $("authPhone").value.trim();
+
+  if (!name) {
+    toast("Please enter your name.");
+    return;
+  }
+
+  if (!/^\d{10}$/.test(phone)) {
+    toast("Enter a valid 10-digit mobile number.");
+    return;
+  }
+
+  const button = $("sendOtpBtn");
+  button.disabled = true;
+
+  try {
+    if (!recaptchaVerifier) {
+      recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+        "recaptcha-container",
+        { size: "normal" },
+        auth
+      );
+      await recaptchaVerifier.render();
+    }
+
+    confirmationResult = await auth.signInWithPhoneNumber(
+      "+91" + phone,
+      recaptchaVerifier
+    );
+
+    $("otpSection").classList.remove("hidden");
+    $("authMessage").textContent =
+      "OTP sent successfully. Check your mobile.";
+
+    toast("OTP sent successfully!");
+  } catch (error) {
+    console.error("OTP sending error:", error);
+    toast("OTP error: " + error.message);
+
+    if (recaptchaVerifier) {
+      recaptchaVerifier.clear();
+      recaptchaVerifier = null;
+    }
+  } finally {
+    button.disabled = false;
+  }
+});
+
+$("verifyOtpBtn").addEventListener("click", async () => {
+  const otp = $("otpCode").value.trim();
+  const name = $("authName").value.trim();
+
+  if (!/^\d{6}$/.test(otp)) {
+    toast("Enter the correct 6-digit OTP.");
+    return;
+  }
+
+  try {
+    if (!confirmationResult) {
+      toast("Please request an OTP first.");
+      return;
+    }
+
+    const result = await confirmationResult.confirm(otp);
+    const user = result.user;
+
+    if (name) {
+      await user.updateProfile({ displayName: name });
+    }
+
+    localStorage.setItem(USER_KEY, JSON.stringify({
+      name: name || user.displayName || "Customer",
+      identity: user.phoneNumber || user.uid,
+      uid: user.uid,
+      phone: user.phoneNumber || "",
+      email: user.email || "",
+      photoURL: user.photoURL || ""
+    }));
+
+    toast("Phone number verified successfully!");
+    closeLayers();
+
+  } catch (error) {
+    console.error("OTP verification error:", error);
+    toast("Verification failed: " + error.message);
+  }
+});
+
