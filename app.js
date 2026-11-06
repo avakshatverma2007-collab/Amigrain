@@ -130,10 +130,9 @@ $("sendOtpBtn").addEventListener("click", async () => {
   try {
     if (!recaptchaVerifier) {
       recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-        "recaptcha-container",
-        { size: "normal" },
-        auth
-      );
+  "recaptcha-container",
+  { size: "normal" }
+);
       await recaptchaVerifier.render();
     }
 
