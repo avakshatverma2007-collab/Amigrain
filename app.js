@@ -73,15 +73,11 @@ const googleSignInBtn = $("googleSignInBtn");
 googleSignInBtn.addEventListener("click", async () => {
   try {
     const provider = new firebase.auth.GoogleAuthProvider();
-    await auth.signInWithRedirect(provider);
+    await auth.signInWithPopup(provider);
   } catch (error) {
-    toast("Google login failed: " + error.message);
+    console.error("Google login error:", error);
+    toast("Google login failed: " + error.code + " - " + error.message);
   }
-});
-
-// Check login after Google redirects back
-auth.getRedirectResult().catch(error => {
-  toast("Login error: " + error.message);
 });
 
 // Keep customer login saved
