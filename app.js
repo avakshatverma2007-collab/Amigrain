@@ -28,7 +28,16 @@ function showLayer(id){$("overlay").classList.remove("hidden");$(id).classList.r
 function closeLayers(){ $("overlay").classList.add("hidden");["cartDrawer","authModal","checkoutModal","ordersModal"].forEach(id=>$(id).classList.add("hidden"))}
 function openCart(){renderCart();showLayer("cartDrawer")}
 function currentUser(){try{return JSON.parse(localStorage.getItem(USER_KEY)||"null")}catch{return null}}
-function openAuth(){const u=currentUser();$("authName").value=u?.name||"";$("authIdentity").value=u?.identity||"";showLayer("authModal")}
+function openAuth() {
+  const u = currentUser();
+
+  $("authName").value = u?.name || "";
+  $("authPhone").value = u?.phone || "";
+  $("otpSection").classList.add("hidden");
+  $("authMessage").textContent = "";
+
+  showLayer("authModal");
+}
 function openOrders(){
  const u=currentUser();if(!u){openAuth();toast("Please register or login first");return}
  const orders=JSON.parse(localStorage.getItem(ORDERS_KEY)||"[]").filter(o=>o.identity===u.identity);
