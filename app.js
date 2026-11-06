@@ -62,7 +62,7 @@ $("filters").addEventListener("click",e=>{const b=e.target.closest("[data-filter
 $("cartBtn").onclick=openCart;$("ordersBtn").onclick=openOrders;$("menuOrders").onclick=()=>{ $("menuPanel").classList.add("hidden");openOrders()};$("loginMenu").onclick=()=>{ $("menuPanel").classList.add("hidden");openAuth()};
 $("menuBtn").onclick=()=>$("menuPanel").classList.toggle("hidden");
 $("checkoutBtn").onclick=checkout;$("placeOrderBtn").onclick=placeOrder;
-$("authSubmit").onclick=()=>{const name=$("authName").value.trim(),identity=$("authIdentity").value.trim();if(!name||identity.length<5){toast("Enter your name and email or phone");return}localStorage.setItem(USER_KEY,JSON.stringify({name,identity}));closeLayers();toast("Demo login successful");};
+
 $("cartItems").addEventListener("click",e=>{const b=e.target.closest("[data-qty]");if(!b)return;const item=cart.find(x=>x.key===b.dataset.qty);if(item){item.qty+=Number(b.dataset.delta);if(item.qty<=0)cart=cart.filter(x=>x.key!==item.key);saveCart();renderCart()}});
 $("customerAddress").addEventListener("input",()=>{const q=encodeURIComponent($("customerAddress").value.trim());$("mapLink").href=q?`https://www.google.com/maps/search/?api=1&query=${q}`:"https://maps.google.com"});
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=closeLayers);$("overlay").onclick=closeLayers;
