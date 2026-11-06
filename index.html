@@ -69,13 +69,47 @@
 </aside>
 
 <section class="modal hidden" id="authModal">
-  <button class="close modal-close" data-close>×</button><span class="eyebrow">WELCOME TO AMIGRAIN</span><h2 id="authTitle">Login / Register</h2>
-  <p class="muted">This starter version saves a demo account on this device only.</p>
-  <label>Your name<input id="authName" placeholder="Enter your name"></label>
-  <label>Email or phone number<input id="authIdentity" placeholder="Email address or mobile number"></label>
-  <button class="primary-btn full" type="button" id="googleSignInBtn">Continue with Google</button>
-  <button class="primary-btn full" id="authSubmit">Continue</button>
-  <p class="tiny">Demo only: this does not send an OTP or verify Gmail. Real authentication is added in Stage 2.</p>
+  <button class="close modal-close" data-close>×</button>
+
+  <span class="eyebrow">WELCOME TO AMIGRAIN</span>
+  <h2 id="authTitle">Login / Register</h2>
+
+  <p class="muted">Sign in using your mobile number or Google account.</p>
+
+  <label>Your name
+    <input id="authName" placeholder="Enter your name">
+  </label>
+
+  <label>Mobile number
+    <input
+      id="authPhone"
+      type="tel"
+      placeholder="10-digit mobile number"
+      inputmode="numeric"
+      maxlength="10">
+  </label>
+
+  <div id="recaptcha-container"></div>
+
+  <button class="primary-btn full" type="button" id="sendOtpBtn">
+    Send OTP
+  </button>
+
+  <div id="otpSection" class="hidden">
+    <label>Enter OTP
+      <input id="otpCode" inputmode="numeric" maxlength="6" placeholder="6-digit OTP">
+    </label>
+
+    <button class="primary-btn full" type="button" id="verifyOtpBtn">
+      Verify OTP
+    </button>
+  </div>
+
+  <p class="tiny" id="authMessage"></p>
+
+  <button class="primary-btn full" type="button" id="googleSignInBtn">
+    Continue with Google
+  </button>
 </section>
 
 <section class="modal wide-modal hidden" id="checkoutModal">
